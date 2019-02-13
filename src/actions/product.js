@@ -4,7 +4,7 @@ import {FETCH_PRODUCTS_OK, FETCH_PRODUCTS_REJECTED} from "../constants/product";
 
 const PRODUCTS_PATH = "products";
 
-export const getProdcuts = () => (dispatch, getState) => {
+export const getProdcuts = () => (dispatch) => {
     let requestObj = {
         limit: 10,
         page: 1,
@@ -14,7 +14,6 @@ export const getProdcuts = () => (dispatch, getState) => {
 
     return axios.post([WP_ENDPOINT, PRODUCTS_PATH].join("/"), requestObj)
         .then((res) => {
-            console.log("YESSSS");
             dispatch({type: FETCH_PRODUCTS_OK, payload: res.data})
         })
         .catch((err) => {
@@ -22,8 +21,4 @@ export const getProdcuts = () => (dispatch, getState) => {
         })
 
 };
-
-// export const getProdcuts = (dispatch) => {
-//     dispatch({type: FETCH_PRODUCTS_OK, payload: {}})
-// };
 
