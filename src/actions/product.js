@@ -4,10 +4,10 @@ import {FETCH_PRODUCTS_OK, FETCH_PRODUCTS_REJECTED} from "../constants/product";
 
 const PRODUCTS_PATH = "products";
 
-export const getProdcuts = () => (dispatch) => {
+export const getProdcuts = (limit, page) => (dispatch) => {
     let requestObj = {
-        limit: 10,
-        page: 1,
+        limit: limit,
+        page: page,
         status: "publish",
         stock_status: "instock"
     };

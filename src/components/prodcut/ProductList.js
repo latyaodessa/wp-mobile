@@ -1,17 +1,31 @@
 import React from 'react';
-import {Image, Text, TextInput, TouchableOpacity, View, StyleSheet} from "react-native";
+import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {connect} from "react-redux";
 
 class ProductList extends React.Component {
 
+
     state = {
-        data: []
+        data: [],
+        page: 1,
+        limit: 10
     };
 
-    fetchProducts = () => {
-        this.props.getProdcuts().then(() => {
+    componentWillMount() {
+        this.fetchProducts(this.state.limit, this.state.page);
+    }
+
+    fetchProducts = (limit, page) => {
+        console.log(limit, page);
+        this.props.getProdcuts(limit, page).then(() => {
             this.setState({data: [...this.state.data, ...this.props.data]})
         });
+    };
+
+    fetchMore = () => {
+        let page = ++this.state.page;
+        this.fetchProducts(this.state.limit, page);
+        this.setState({page: page})
     };
 
     render() {
@@ -20,7 +34,7 @@ class ProductList extends React.Component {
                 <TextInput placeholder={"test placeholder"}
                            style={{borderWidth: 1, borderColor: 'black', height: 50, flex: 1, padding: 5}}/>
 
-                <TouchableOpacity onPress={() => this.fetchProducts()}>
+                <TouchableOpacity onPress={() => this.fetchMore()}>
                     <View style={{height: 50}}>
                         <Text>PRESS</Text>
                     </View>
@@ -30,7 +44,7 @@ class ProductList extends React.Component {
                         return <View key={prd.id}>
                             <Image
                                 resizeMode='cover'
-                                style={{height: 200}}
+                                style={{height: 300}}
                                 source={{uri: prd.single_image[0]}}
                             />
                         </View>
@@ -49,7 +63,7 @@ class ProductList extends React.Component {
 
 const styles = StyleSheet.create(
     {bgContainer: {flex: 1, width: null, height: null}}
-    );
+);
 
 
 export default connect()(ProductList);
