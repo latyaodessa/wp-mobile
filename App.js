@@ -1,6 +1,6 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {AppLoading, Asset, Font, Icon} from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import store from './src/store';
 import {Provider} from 'react-redux';
@@ -13,11 +13,11 @@ export default class App extends React.Component {
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
-        <AppLoading
-          startAsync={this._loadResourcesAsync}
-          onError={this._handleLoadingError}
-          onFinish={this._handleFinishLoading}
-        />
+          <AppLoading
+              startAsync={this._loadResourcesAsync}
+              onError={this._handleLoadingError}
+              onFinish={this._handleFinishLoading}
+          />
       );
     } else {
       return (
@@ -54,7 +54,7 @@ export default class App extends React.Component {
   };
 
   _handleFinishLoading = () => {
-    this.setState({ isLoadingComplete: true });
+    this.setState({isLoadingComplete: true});
   };
 }
 

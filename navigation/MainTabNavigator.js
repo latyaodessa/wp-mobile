@@ -1,60 +1,59 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
-
+import {Platform} from 'react-native';
+import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
+import TabBarIconCart from '../src/containers/product/TabBarIconCart'
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import SingleProductScreen from '../screens/SingleProductScreen';
 import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import CartScreen from '../screens/CartScreen';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+    Home: {screen: HomeScreen},
+    SingleProductScreen: {screen: SingleProductScreen}
 });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
-  ),
+    tabBarLabel: 'Home',
+    tabBarIcon: ({focused}) => (
+        <TabBarIcon
+            focused={focused}
+            name={
+                Platform.OS === 'ios'
+                    ? `ios-information-circle${focused ? '' : '-outline'}`
+                    : 'md-information-circle'
+            }
+        />
+    ),
 };
 
 const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+    Links: LinksScreen,
 });
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
-    />
-  ),
+    tabBarLabel: 'Links',
+    tabBarIcon: ({focused}) => (
+        <TabBarIcon
+            focused={focused}
+            name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+        />
+    ),
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+const ProfileStack = createStackNavigator({
+    Settings: CartScreen,
 });
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
-    />
-  ),
+ProfileStack.navigationOptions = {
+    tabBarLabel: 'Cart',
+    tabBarIcon: ({focused}) => (
+        <TabBarIconCart focused={focused}/>
+    ),
 };
 
 export default createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
-  SettingsStack,
+    HomeStack,
+    LinksStack,
+    ProfileStack,
 });
