@@ -6,7 +6,14 @@ import {getImagesByIds} from "../../actions/attachments";
 import {bindActionCreators} from "redux";
 
 const mapStateToProps = ({singleProduct, images, cart}, props) => {
-    return {singleProduct, images, item: props.item, cart: cart, navigation: props.navigation}
+    return {
+        singleProduct,
+        images,
+        item: props.item,
+        cart: cart,
+        navigation: props.navigation,
+        showAddToCartMessage: props.showAddToCartMessage
+    }
 };
 
 const mapDispatchToProps = dispatch =>

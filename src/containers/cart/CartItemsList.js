@@ -1,16 +1,19 @@
 import {connect} from 'react-redux';
 import CartItemsList from '../../components/cart/CartItemsList'
-import {addToCart} from "../../actions/cart";
+import {addToCart, deleteItem, plusOne, minusOne} from "../../actions/cart";
 import {bindActionCreators} from "redux";
 
-const mapStateToProps = ({cart}) => {
-    return cart;
+const mapStateToProps = ({cart}, navigation) => {
+    return {cart, navigation};
 };
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            addToCart
+            addToCart,
+            deleteItem,
+            plusOne,
+            minusOne
         },
         dispatch
     );

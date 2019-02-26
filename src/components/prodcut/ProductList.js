@@ -62,7 +62,6 @@ class ProductList extends React.Component {
             </View>
         </TouchableOpacity>
     }
-    ;
 
     render() {
         return (<ScrollView onScroll={({nativeEvent}) => this.fetchMore(nativeEvent)}>

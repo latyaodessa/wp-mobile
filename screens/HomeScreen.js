@@ -4,7 +4,7 @@ import ProductList from '../src/containers/product/ProductList';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Products',
+    title: 'Товары',
   };
 
 

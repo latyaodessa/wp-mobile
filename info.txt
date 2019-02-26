@@ -1,0 +1,2 @@
+resotre ios
+xcrun simctl erase all

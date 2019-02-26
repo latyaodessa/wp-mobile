@@ -1,26 +1,24 @@
 import React from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import SingleProduct from './../src/containers/product/SingleProduct';
-import TabBarIcon from '../components/TabBarIcon';
-
+import { showMessage, hideMessage } from "react-native-flash-message";
+import FlashMessage from "react-native-flash-message";
 export default class SingleProductScreen extends React.Component {
 
-    static navigationOptions = ({ navigation }) => ({
-        tabBarIcon:  <TabBarIcon
-            name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
-        />
-    });
-
+    showAddToCartMessage = () => {
+        showMessage({
+            message: "Товар добавлен в корзину",
+            type: "default",
+        });
+    };
 
     render() {
         const {navigation} = this.props;
         const item = navigation.getParam('item', null);
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => navigation.setParams({title: "test"})}>
-                    <Text>test</Text>
-                </TouchableOpacity>
-                <SingleProduct item={item} navigation={navigation}/>
+                <SingleProduct item={item} navigation={navigation} showAddToCartMessage={this.showAddToCartMessage}/>
+                <FlashMessage position="top" />
             </View>
         )
     }
@@ -28,7 +26,6 @@ export default class SingleProductScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
+        flex: 1
     }
 });

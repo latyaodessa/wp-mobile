@@ -1,9 +1,10 @@
 import React from 'react';
-import {Dimensions, ScrollView, StyleSheet, TouchableOpacity, View} from "react-native";
+import {Dimensions, ScrollView, StyleSheet, TouchableOpacity, View, Button} from "react-native";
 import {connect} from "react-redux";
 import ImageSlider from 'react-native-image-slider';
 import {Text} from "react-native-elements";
 import {Feather} from '@expo/vector-icons';
+
 
 const ITEM_WIDTH = Dimensions.get('window').width;
 const ITEM_HEIGHT = Dimensions.get('window').height;
@@ -33,6 +34,7 @@ class SingleProduct extends React.Component {
 
     addItemToCart = (item) => {
         this.props.addToCart(item);
+        this.props.showAddToCartMessage();
     };
 
 
@@ -55,6 +57,7 @@ class SingleProduct extends React.Component {
     };
 
     render() {
+        console.log(this.props);
         return (<ScrollView>
                 <View style={{height: ITEM_HEIGHT / 2, width: ITEM_WIDTH}}>
                     <ImageSlider images={this.state.images}/>
