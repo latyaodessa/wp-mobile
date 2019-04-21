@@ -5,7 +5,7 @@ import {addToCart} from "../../actions/cart";
 import {getImagesByIds} from "../../actions/attachments";
 import {bindActionCreators} from "redux";
 
-const mapStateToProps = ({singleProduct, images, cart}, props) => {
+const mapStateToProps = ({singleProduct, images, cart, item}, props) => {
     return {
         singleProduct,
         images,

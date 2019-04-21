@@ -1,9 +1,8 @@
 import React from 'react';
-import {Dimensions, FlatList, Image, ScrollView, StyleSheet, TouchableOpacity, View} from "react-native";
+import {Dimensions, FlatList, Image, ScrollView, StyleSheet, TouchableOpacity, View, Text} from "react-native";
 import {connect} from "react-redux";
 import {AntDesign, Ionicons} from '@expo/vector-icons';
 import CenteredLoadingIdicator from '../core/CenteredLoadingIdicator';
-import {Text} from "react-native-elements";
 
 const ITEM_WIDTH = Dimensions.get('window').width;
 

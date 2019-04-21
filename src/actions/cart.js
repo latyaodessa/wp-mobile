@@ -29,6 +29,7 @@ export const addToCart = (item) => async (dispatch) => {
         }
 
         cartItems.count = ++cartItems.count;
+        cartItems.total = parseFloat(cartItems.total) + parseFloat(cartItems.items[[item.id]].price);
 
         await AsyncStorage.setItem(items_key, JSON.stringify(cartItems))
             .then(() => (
@@ -51,6 +52,7 @@ export const deleteItem = (itemId) => async (dispatch) => {
 
         if (itemToDelete != null) {
             cartItems.count -= itemToDelete.count;
+            cartItems.total -= itemToDelete.total;
             delete cartItems.items[itemId];
         }
 
@@ -79,6 +81,8 @@ export const plusOne = (itemId) => async (dispatch) => {
             ++cartItems.count;
             ++cartItems.items[itemId].count;
             cartItems.items[itemId].total = parseFloat(cartItems.items[itemId].total) + parseFloat(cartItems.items[itemId].price);
+            cartItems.total = parseFloat(cartItems.total) + parseFloat(cartItems.items[[itemId]].price);
+
         }
 
         await AsyncStorage.setItem(items_key, JSON.stringify(cartItems))
@@ -101,16 +105,16 @@ export const minusOne = (itemId) => async (dispatch) => {
         let cartItems = await getCartItems();
         let itemToUpdate = cartItems.items[itemId];
 
-
-        console.log(cartItems.items[itemId].count);
-
         if (itemToUpdate != null) {
             if (cartItems.items[itemId].count > 1) {
                 --cartItems.items[itemId].count;
                 --cartItems.count;
                 cartItems.items[itemId].total = parseFloat(cartItems.items[itemId].total) - parseFloat(cartItems.items[itemId].price);
+                cartItems.total = parseFloat(cartItems.total) - parseFloat(cartItems.items[[itemId]].price);
+
             } else {
                 cartItems.count -= itemToUpdate.count;
+                cartItems.total -= itemToUpdate.total;
                 delete cartItems.items[itemId];
             }
 
@@ -137,7 +141,7 @@ export const getCartItems = async () => {
 
         let existingItemsJson = JSON.parse(existingItems);
         if (!existingItemsJson) {
-            existingItemsJson = {items: {}, count: 0};
+            existingItemsJson = {items: {}, count: 0, total: 0};
         }
 
         return existingItemsJson;
@@ -146,4 +150,18 @@ export const getCartItems = async () => {
         console.error("error on saving")
     }
 };
+
+export const emptyCart = () => async (dispatch) => {
+    try {
+        AsyncStorage.removeItem(items_key)
+            .then(() => dispatch({type: CART_UPDATE_EVENT, payload: {items: {}, count: 0, total: 0}}))
+            .catch((e) => (
+                console.error("can not empty cart" + e)
+            ))
+
+    } catch (error) {
+        console.error("can not empty cart")
+    }
+};
+
 

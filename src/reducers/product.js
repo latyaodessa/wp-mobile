@@ -48,6 +48,7 @@ export function singleProduct(state =
                                       data: null,
                                       fetching: false,
                                       fetched: false,
+                                      images: [],
                                       error: null
                                   }
     , action) {
@@ -61,11 +62,13 @@ export function singleProduct(state =
             }
         }
         case FETCH_SINGLE_PRODUCT_OK: {
+            const images = action.payload.gallery_images.map((img) => img[0]);
             return {
                 ...state,
                 fetching: false,
                 fetched: true,
                 data: action.payload,
+                images: images,
                 error: null
             }
         }

@@ -15,9 +15,10 @@ export default class SingleProductScreen extends React.Component {
     render() {
         const {navigation} = this.props;
         const item = navigation.getParam('item', null);
+        const itemId = navigation.getParam('itemId', null);
         return (
             <View style={styles.container}>
-                <SingleProduct item={item} navigation={navigation} showAddToCartMessage={this.showAddToCartMessage}/>
+                <SingleProduct item={item} itemId={itemId} navigation={navigation} showAddToCartMessage={this.showAddToCartMessage}/>
                 <FlashMessage position="top" />
             </View>
         )

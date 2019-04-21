@@ -1,8 +1,14 @@
 import {combineReducers} from 'redux';
-import {products, singleProduct, cart} from "./product";
+import {cart, products, singleProduct} from "./product";
 import {images} from "./attachments";
+import {checkoutFields, shippingMethods, submit} from "./checkout";
+import {loginData, orderItems, userOrders} from "./user";
+import {links} from "./core";
 
 export default combineReducers({
     products, singleProduct, cart,
-    images
+    images,
+    checkoutFields, shippingMethods, submit,
+    loginData, userOrders, orderItems,
+    links
 });

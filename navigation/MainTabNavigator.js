@@ -1,12 +1,16 @@
 import React from 'react';
-import {Platform} from 'react-native';
+import {View} from 'react-native';
 import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 import TabBarIconCart from '../src/containers/product/TabBarIconCart'
-import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import SearchCatergoryScreen from '../screens/SearchCatergoryScreen';
 import SingleProductScreen from '../screens/SingleProductScreen';
-import LinksScreen from '../screens/LinksScreen';
+import UserScreen from '../screens/UserScreen';
+import UserOrderItemsScreen from '../screens/UserOrderItemsScreen';
 import CartScreen from '../screens/CartScreen';
+import CheckoutScreen from '../screens/CheckoutScreen';
+import {Feather} from '@expo/vector-icons';
+import Colors from "../constants/Colors";
 
 const HomeStack = createStackNavigator({
     Home: {screen: HomeScreen},
@@ -14,46 +18,68 @@ const HomeStack = createStackNavigator({
 });
 
 HomeStack.navigationOptions = {
-    tabBarLabel: 'Home',
+    tabBarLabel: <View/>,
     tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={
-                Platform.OS === 'ios'
-                    ? `ios-information-circle${focused ? '' : '-outline'}`
-                    : 'md-information-circle'
-            }
-        />
+        <View>
+            <Feather name="list" size={26}
+                     color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+            />
+        </View>
     ),
 };
 
-const LinksStack = createStackNavigator({
-    Links: LinksScreen,
+
+const SearchStack = createStackNavigator({
+    SearchCatergoryScreen: {screen: SearchCatergoryScreen},
+    SingleProductScreen: {screen: SingleProductScreen}
 });
 
-LinksStack.navigationOptions = {
-    tabBarLabel: 'Links',
+SearchStack.navigationOptions = {
+    tabBarLabel: <View/>,
     tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
-        />
+        <View>
+            <Feather name="search" size={26}
+                     color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+            />
+        </View>
     ),
 };
 
-const ProfileStack = createStackNavigator({
+
+const UserStack = createStackNavigator({
+    UserScreen: {screen: UserScreen},
+    UserOrderItemsScreen: UserOrderItemsScreen,
+    SingleProductScreen: {screen: SingleProductScreen}
+});
+
+UserStack.navigationOptions = {
+    tabBarLabel: <View/>,
+    tabBarIcon: ({focused}) => (
+        <View>
+            <Feather name="user" size={26}
+                     color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+            />
+        </View>
+    ),
+};
+
+
+const CartStack = createStackNavigator({
     Settings: CartScreen,
+    SingleProductScreen: {screen: SingleProductScreen},
+    CheckoutScreen: {screen: CheckoutScreen}
 });
 
-ProfileStack.navigationOptions = {
-    tabBarLabel: 'Cart',
+CartStack.navigationOptions = {
+    tabBarLabel: <View/>,
     tabBarIcon: ({focused}) => (
         <TabBarIconCart focused={focused}/>
-    ),
+    )
 };
 
 export default createBottomTabNavigator({
     HomeStack,
-    LinksStack,
-    ProfileStack,
+    SearchStack,
+    CartStack: CartStack,
+    UserStack: UserStack,
 });
