@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Wordpress Mobile",
-    "slug": "wp-mobile",
+    "name": "Tempa",
+    "slug": "tempa-mobile",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ua.tempa"
+    },
+    "android": {
+      "package": "com.ua.tempa"
     }
   }
 }

@@ -47,7 +47,7 @@ class ProductList extends React.Component {
         return <TouchableOpacity onPress={() => navigate('SingleProductScreen', {
             item: item
         })}>
-            <View style={{width: ITEM_WIDTH / this.state.columns, padding: 5, display: "flex", flexDirection: "table"}}>
+            <View style={{width: ITEM_WIDTH / this.state.columns, padding: 5, display: "flex"}}>
                 <Image
                     resizeMode='cover'
                     style={{height: 200}}
