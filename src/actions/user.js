@@ -2,20 +2,20 @@ import {AsyncStorage} from "react-native"
 import axios from "axios";
 import {WP_ENDPOINT} from "../../app.cofig";
 import {
+    FETCH_ORDER_ITEMS_LOAD,
     FETCH_ORDER_ITEMS_OK,
     FETCH_ORDER_ITEMS_REJECTED,
+    FETCH_ORDERS_LOAD,
     FETCH_ORDERS_OK,
     FETCH_ORDERS_REJECTED,
     LOGIN_OK,
     LOGIN_REJECTED,
     USER_LOAD,
-    USER_LOGOUT,
-    FETCH_ORDERS_LOAD,
-    FETCH_ORDER_ITEMS_LOAD
+    USER_LOGOUT
 } from "../constants/user";
 
 const user_key = 'user';
-const orders_key = 'orders';
+const local_orders_key = 'local_orders';
 
 const USER_PATH = "user";
 
@@ -118,18 +118,6 @@ export const setUser = async (user) => {
     }
 };
 
-// export const setOrders = async (orders) => {
-//     try {
-//         await AsyncStorage.setItem(orders_key, JSON.stringify(orders))
-//             .catch((e) => (
-//                 console.error("can not add to cart" + e)
-//             ))
-//
-//     } catch (error) {
-//         console.error("error on saving" + error)
-//     }
-// };
-
 
 export const getUser = async () => {
     try {
@@ -141,11 +129,46 @@ export const getUser = async () => {
 };
 
 
-// export const getUserOrders = async () => {
-//     try {
-//         const orders = await AsyncStorage.getItem(orders_key);
-//         return JSON.parse(orders);
-//     } catch (error) {
-//         console.error("error geting user")
-//     }
-// };
+export const addLocalOrders = async (addOrder) => {
+    try {
+
+        let orders = await getUserLocalOrders();
+        orders.push(addOrder);
+
+        await AsyncStorage.setItem(local_orders_key, JSON.stringify(orders))
+            .catch((e) => (
+                console.error("can not add to cart" + e)
+            ))
+
+    } catch (error) {
+        console.error("error on saving local orders" + error)
+    }
+};
+
+
+export const removeLocalOrders = () => {
+    try {
+        AsyncStorage.removeItem(local_orders_key)
+            .catch((e) => (
+                console.error("can not add to cart" + e)
+            ))
+    } catch (error) {
+        console.error("error on removeing local orders" + error)
+    }
+
+};
+
+export const getUserLocalOrders = async () => {
+    try {
+        let orders = await AsyncStorage.getItem(local_orders_key);
+        let ordersJson = JSON.parse(orders);
+        if (!ordersJson) {
+            ordersJson = [];
+        }
+        return ordersJson;
+    } catch (error) {
+        console.error("error getting local orders")
+    }
+};
+
+

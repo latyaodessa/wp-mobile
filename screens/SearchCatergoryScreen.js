@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import ProductList from '../src/containers/product/ProductList';
+import SearchProductList from '../src/containers/product/SearchProductList';
 
 export default class SearchCatergoryScreen extends React.Component {
   static navigationOptions = {
@@ -11,7 +11,7 @@ export default class SearchCatergoryScreen extends React.Component {
   render() {
     return (
         <View style={styles.container}>
-          <ProductList navigation={this.props.navigation}/>
+          <SearchProductList navigation={this.props.navigation}/>
         </View>
     )
   }

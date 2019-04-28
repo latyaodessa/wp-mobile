@@ -110,12 +110,11 @@ class Checkout extends React.Component {
                     request.user = user.ID;
                 }
                 this.props.submitOrder(request).then(() => {
-                    console.log("navifation");
-                    console.log(this.props);
-
                     this.props.emptyCart();
-                    this.redirectToUserScreen();
-
+                    this.props.addLocalOrders(request).then(() => {
+                        console.log("redirect");
+                        this.redirectToUserScreen()
+                    });
                 });
             }).catch((err) => {
                 console.log(err);
@@ -180,6 +179,8 @@ const BillingForm = ({billing, setFormField, state}) => {
                        placeholder={value.placeholder}
                        errorStyle={styles.errorText}
                        errorMessage={errorText}
+                       autoCapitalize='none'
+                       maxLength={50}
                 />
             </View>
         })}

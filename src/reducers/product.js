@@ -1,10 +1,13 @@
 import {
     CART_UPDATE_EVENT,
+    FETCH_PRODUCTS_CATEGORIES_LOAD,
+    FETCH_PRODUCTS_CATEGORIES_OK,
+    FETCH_PRODUCTS_CATEGORIES_REJECTED,
     FETCH_PRODUCTS_LOAD,
     FETCH_PRODUCTS_OK,
     FETCH_PRODUCTS_REJECTED,
     FETCH_SINGLE_PRODUCT_OK,
-    FETCH_SINGLE_PRODUCT_REJECTED
+    FETCH_SINGLE_PRODUCT_REJECTED,
 } from "../constants/product";
 
 export function products(state =
@@ -92,6 +95,42 @@ export function cart(state =
                 ...state,
                 data: action.payload
             }
+        }
+        default: {
+            return {...state}
+        }
+    }
+}
+
+
+export function categories(state =
+                               {
+                                   data: null,
+                                   fetching: false,
+                                   fetched: false,
+                                   error: null
+                               }
+    , action) {
+
+    switch (action.type) {
+        case FETCH_PRODUCTS_CATEGORIES_LOAD: {
+            return {
+                ...state,
+                fetching: true,
+                fetched: false
+            }
+        }
+        case FETCH_PRODUCTS_CATEGORIES_OK: {
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                data: action.payload,
+                error: null
+            }
+        }
+        case FETCH_PRODUCTS_CATEGORIES_REJECTED: {
+            return {...state, fetching: false, error: action.payload, data: null}
         }
         default: {
             return {...state}

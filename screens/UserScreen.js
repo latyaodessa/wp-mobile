@@ -7,6 +7,7 @@ import CenteredLoadingIdicator from '../src/components/core/CenteredLoadingIdica
 import {Button} from 'react-native-elements';
 import {connect} from "react-redux";
 import UserOrdersList from "../src/containers/user/UserOrdersList";
+import UserLocalOrdersList from "../src/containers/user/UserLocalOrdersList"
 
 export const REGISTER_PAGE = "register";
 export const LOGIN_PAGE = "login";
@@ -81,7 +82,11 @@ class UserScreen extends React.Component {
           {this.state.activePage &&
           this.state.activePage === LIST_PAGE &&
           this.state.user &&
-          <UserOrdersList navigation={navigation} />
+          <UserOrdersList navigation={navigation}/>
+          }
+          {this.state.activePage &&
+          this.state.activePage !== LIST_PAGE &&
+          <UserLocalOrdersList navigation={navigation}/>
           }
 
           {!this.state.activePage && <CenteredLoadingIdicator/>}
