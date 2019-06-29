@@ -1,8 +1,9 @@
 import React from 'react';
-import {Dimensions, FlatList, Image, ScrollView, StyleSheet, TouchableOpacity, View, Text} from "react-native";
+import {Dimensions, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {connect} from "react-redux";
 import {AntDesign, Ionicons} from '@expo/vector-icons';
 import CenteredLoadingIdicator from '../core/CenteredLoadingIdicator';
+import {_retrieveConfig} from "../../constants/SettingsManager";
 
 const ITEM_WIDTH = Dimensions.get('window').width;
 
@@ -13,8 +14,16 @@ class ProductList extends React.Component {
         data: [],
         page: 1,
         limit: 10,
-        columns: 2
+        columns: 2,
+        clientConfig: ''
     };
+
+
+    async componentDidMount() {
+        const config = await _retrieveConfig();
+        this.setState({clientStyle: config[this.constructor.name].config});
+    }
+
 
     componentWillMount() {
         this.fetchProducts(this.state.limit, this.state.page);
@@ -60,7 +69,7 @@ class ProductList extends React.Component {
                 </View>
             </View>
         </TouchableOpacity>
-    }
+    };
 
     render() {
         return (<ScrollView onScroll={({nativeEvent}) => this.fetchMore(nativeEvent)}>
@@ -68,7 +77,7 @@ class ProductList extends React.Component {
                 <ButtonBar changeColumns={(columns) => this.setState({columns: columns})}/>
                 {this.state.data.length > 0 &&
                 <FlatList
-                    numColumns={this.state.columns}
+                    numColumns={this.state.clientConfig ? this.state.clientConfig.numberOfColumns : this.state.columns}
                     key={this.state.columns}
                     data={this.state.data}
                     keyExtractor={(item, index) => index.toString()}

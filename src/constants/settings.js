@@ -1,0 +1,3 @@
+export const FETCH_API_LOAD = 'FETCH_API_LOAD';
+export const FETCH_API_OK = 'FETCH_API_OK';
+export const FETCH_API_REJECTED = 'FETCH_API_REJECTED';

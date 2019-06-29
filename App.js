@@ -3,15 +3,39 @@ import {Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {AppLoading, Asset, Font, Icon} from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import store from './src/store';
-import {Provider} from 'react-redux';
+import {connect, Provider} from 'react-redux';
+import {_storeConfig} from './src/constants/SettingsManager';
+import {CONFIG_PATH} from "./app.cofig";
+import {fetchApi} from "./src/actions/config/api";
 
-export default class App extends React.Component {
+class App extends React.Component {
+
   state = {
     isLoadingComplete: false,
+    isConfigLoadingComplete: false
   };
 
+  async componentDidMount() {
+
+    console.log("AAAAAA");
+
+    this.props.dispatch(fetchApi()).then((rsp) => {
+      console.log(rsp);
+      // return rsp;
+    });
+
+    try {
+      const configData = await fetch(CONFIG_PATH);
+      const config = await configData.json();
+      await (_storeConfig(config));
+      this.setState({isConfigLoadingComplete: true})
+    } catch (err) {
+      console.log("Error fetching data-----------", err); //TODO
+    }
+  }
+
   render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
+    if (!this.state.isConfigLoadingComplete && !this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
           <AppLoading
               startAsync={this._loadResourcesAsync}
@@ -57,6 +81,10 @@ export default class App extends React.Component {
     this.setState({isLoadingComplete: true});
   };
 }
+
+// export default connect()(App);
+export default (App);
+
 
 const styles = StyleSheet.create({
   container: {

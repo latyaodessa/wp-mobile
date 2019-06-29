@@ -3,8 +3,8 @@ import ProductList from '../../components/prodcut/ProductList'
 import {getProdcuts} from "../../actions/product";
 import {bindActionCreators} from "redux";
 
-const mapStateToProps = ({products}, navigation) => {
-    return {products, navigation}
+const mapStateToProps = ({products, api}, navigation) => {
+    return {products, api, navigation}
 };
 
 const mapDispatchToProps = dispatch =>
